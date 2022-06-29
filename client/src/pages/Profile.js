@@ -1,19 +1,19 @@
-import React from "react";
-import { Navigate, useParams } from "react-router-dom";
+import React from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 
-import ThoughtList from "../components/ThoughtList";
-import FriendList from "../components/FriendList";
-import ThoughtForm from "../components/ThoughtForm";
+import ThoughtForm from '../components/ThoughtForm';
+import ThoughtList from '../components/ThoughtList';
+import FriendList from '../components/FriendList';
 
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_USER, QUERY_ME } from "../utils/queries";
-import { ADD_FRIEND } from "../utils/mutations";
-import Auth from "../utils/auth";
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { ADD_FRIEND } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const Profile = (props) => {
-  const [addFriend] = useMutation(ADD_FRIEND);
   const { username: userParam } = useParams();
 
+  const [addFriend] = useMutation(ADD_FRIEND);
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
@@ -22,7 +22,7 @@ const Profile = (props) => {
 
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/profile" />;
+    return <Navigate to="/profile:username" />;
   }
 
   if (loading) {
@@ -52,7 +52,7 @@ const Profile = (props) => {
     <div>
       <div className="flex-row mb-3">
         <h2 className="bg-dark text-secondary p-3 display-inline-block">
-          Viewing {userParam ? `${user.username}'s` : "your"} profile.
+          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
         </h2>
 
         {userParam && (
